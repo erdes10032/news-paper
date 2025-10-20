@@ -1,0 +1,75 @@
+from news.models import Author, Category, Post, PostCategory, Comment
+
+1.
+user1 = User.objects.create_user('user1')
+user2 = User.objects.create_user('user2')
+
+2.
+author1 = Author.objects.create(user = user1)
+author2 = Author.objects.create(user = user2)
+
+3. 
+category1 = Category.objects.create(name = 'politics')
+category2 = Category.objects.create(name = 'economy')
+category3 = Category.objects.create(name = 'social')
+category4 = Category.objects.create(name = 'technology')
+
+4. 
+post1 = Post.objects.create(author = author1, post_type = 'article', title = 'Article 1', text = 'Text for 1 article')
+news1 = Post.objects.create(author = author1, post_type = 'news', title = 'News 1', text = 'Text for 1 news')
+post2 = Post.objects.create(author = author2, post_type = 'article', title = 'Article 2', text = 'Text for 2 article')
+
+5.
+post1.category.add(category1)
+post1.category.add(category3)
+post1.category.add(category4)
+news1.category.add(category1)
+news1.category.add(category2)
+post2.category.add(category2)
+post2.category.add(category4)
+
+6.
+comment1 = Comment.objects.create(post = post1, user = user2, text = 'Text for 1 comment')
+comment2 = Comment.objects.create(post = post1, user = user2, text = 'Text for 2 comment')
+comment3 = Comment.objects.create(post = news1, user = user1, text = 'Text for 3 comment')
+comment4 = Comment.objects.create(post = post2, user = user2, text = 'Text for 4 comment') 
+comment5 = Comment.objects.create(post = post2, user = user1, text = 'Text for 5 comment') 
+comment6 = Comment.objects.create(post = post2, user = user2, text = 'Text for 6 comment')
+
+7.
+comment1.like()
+comment1.dislike()
+comment2.like()
+comment3.dislike()
+comment3.dislike()
+comment4.like()
+comment4.like()
+comment4.like()
+comment5.like()
+comment5.dislike()
+comment5.dislike()
+comment6.dislike()
+post1.like()
+post1.like()
+post2.dislike()
+post2.like()
+post2.dislike()
+news1.like()
+news1.like()
+
+8.
+author1.update_rating()
+author2.update_rating()
+
+9.
+best_author =  Author.objects.all().order_by('-author_rating').first()
+print(f'Best author! \nUsername - {best_author.user.username} \nRating - {best_author.author_rating}')
+
+10.
+best_post = Post.objects.all().order_by('-post_rating').first()
+print(f'Best post! \nCreation date - {best_post.creation_date} \nAuthor username - {best_post.author.user.username} \nRating - {best_post.post_rating} \nTitle - {best_post.title} \nPreview - {best_post.preview()}')
+
+11.
+comments = Comment.objects.filter(post=best_post)
+for comment in comments:
+	print(f'Date - {comment.creation_date} \nUser - {comment.user.username} \nRating - {comment.comment_rating} \nText - {comment.text} \n' + '-' * 50)
