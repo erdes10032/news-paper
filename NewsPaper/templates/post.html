@@ -1,0 +1,26 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+    <h1>{{ post.title|censor }}</h1>
+{% endblock title %}
+
+{% block content %}
+    <table style="width: 100%; text-align: center;">
+           <tr>
+                <td>Publication date - {{ post.creation_date|date:'d.M.Y' }}</td>
+           </tr>
+            <tr>
+                <td> Category - {{ post.category.all|join_categories }}</td>
+            </tr>
+           <tr>
+                <td>Rate - {{ post.post_rating }} </td>
+           </tr>
+           <tr>
+                <td>Author - {{ post.author.user.username }}</td>
+           </tr>
+           <tr>
+                <td>{{ post.text|censor }}</td>
+           </tr>
+    </table>
+{% endblock content %}

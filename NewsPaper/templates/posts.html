@@ -1,0 +1,30 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+   <h1>All news</h1>
+{% endblock title %}
+
+{% block content %}
+   <h5> Number of news - {{ posts|length }}</h5>
+   {% if posts %}
+       <table style="width: 110%; text-align: center;">
+           <tr>
+               <td>Title</td>
+               <td>Publication date</td>
+               <td>Text</td>
+           </tr>
+
+           {% for post in posts %}
+           <tr>
+               <td>{{ post.title|censor }}</td>
+               <td>{{ post.creation_date|date:'d.M.Y' }}</td>
+               <td>{{ post.text|truncatechars:20|censor}}</td>
+           </tr>
+           {% endfor %}
+
+       </table>
+   {% else %}
+       <h2>No news!</h2>
+   {% endif %}
+{% endblock content %}
