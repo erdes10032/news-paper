@@ -47,6 +47,9 @@ class Post(models.Model):
         else:
             return self.text
 
+    def __str__(self):
+        return f'{self.title} \n{self.preview()}'
+
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
