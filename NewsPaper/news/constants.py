@@ -1,0 +1,1 @@
+BAD_WORDS = ['fuck', 'shit', 'bitch']

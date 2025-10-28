@@ -1,14 +1,12 @@
 from django import template
 from django.core.exceptions import BadRequest
-
+from ..constants import BAD_WORDS
 register = template.Library()
 
 @register.filter()
 def censor(value):
    if not isinstance(value, str):
       raise TypeError('Value must be a string')
-
-   BAD_WORDS = ['fack', 'shit', 'bitch']
 
    censored_text = value
    for word in BAD_WORDS:
