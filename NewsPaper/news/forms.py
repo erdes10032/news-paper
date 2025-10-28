@@ -19,24 +19,21 @@ class PostForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        text = cleaned_data.get("text")
-        title = cleaned_data.get("title")
+        text = cleaned_data.get("text", "") or ""
+        title = cleaned_data.get("title", "") or ""
         if title == text:
             raise ValidationError({
                 "title": "The title cannot be identical to the text"
             })
-        if title:
-            for word in BAD_WORDS:
-                if word in title.lower():
-                    raise ValidationError({
-                        "title": "The title should not contain bad words."
-                    })
-        if text:
-            for word in BAD_WORDS:
-                if word in text.lower():
-                    raise ValidationError({
-                        "text": "The text should not contain bad words."
-                    })
+        for word in BAD_WORDS:
+            if word in title.lower():
+                raise ValidationError({
+                    "title": "The title should not contain bad words."
+                })
+            if word in text.lower():
+                raise ValidationError({
+                    "text": "The text should not contain bad words."
+                })
 
     def clean_title(self):
         title = self.cleaned_data["title"]
