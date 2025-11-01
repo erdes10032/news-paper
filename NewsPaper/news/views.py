@@ -1,10 +1,12 @@
 from django.views.generic import (
-    ListView, DetailView, CreateView, UpdateView, DeleteView
+    ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 )
 from django.urls import reverse_lazy
 from .forms import PostForm
 from .models import Post
 from .filters import PostFilter
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class NewsList(ListView):
@@ -61,7 +63,8 @@ class ArticleDetail(DetailView):
     def get_queryset(self):
         return Post.objects.filter(post_type='article')
 
-class NewsCreate(CreateView):
+class NewsCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'news.add_post'
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
@@ -71,7 +74,8 @@ class NewsCreate(CreateView):
         return super().form_valid(form)
 
 
-class ArticleCreate(CreateView):
+class ArticleCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'news.add_post'
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
@@ -81,7 +85,8 @@ class ArticleCreate(CreateView):
         return super().form_valid(form)
 
 
-class NewsUpdate(UpdateView):
+class NewsUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
@@ -89,7 +94,9 @@ class NewsUpdate(UpdateView):
     def get_queryset(self):
         return Post.objects.filter(post_type='news')
 
-class ArticleUpdate(UpdateView):
+
+class ArticleUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
@@ -114,3 +121,6 @@ class ArticleDelete(DeleteView):
 
     def get_queryset(self):
         return Post.objects.filter(post_type='article')
+
+class NewsOrArticleView(TemplateView):
+    template_name = 'news_or_article.html'

@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+  <h2>
+    User {{request.user.username}}
+    in groups:
+    {% for group in request.user.groups.all %}
+      {{ group.name }}{% if not forloop.last %}, {% endif %}
+    {% empty %}
+      No groups
+    {% endfor %}
+  </h2>
+{% endblock title %}
+
+{% block content %}
+  <button> <a href="upgrade/"> Хочу Premium!</a> </button>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+   <h2>Are you interested in news or articles?</h2>
+{% endblock title %}
+
+{% block content %}
+    <button> <a href="{% url 'news_list' %}">News</a> </button>
+    <button> <a href="{% url 'article_list' %}">Articles</a> </button>
+{% endblock %}
