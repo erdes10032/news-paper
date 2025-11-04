@@ -3,10 +3,12 @@ from django.views.generic import (
 )
 from django.urls import reverse_lazy
 from .forms import PostForm
-from .models import Post
+from .models import Post, Category
 from .filters import PostFilter
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.http import HttpResponseRedirect
+
 
 
 class NewsList(ListView):
@@ -62,6 +64,7 @@ class ArticleDetail(DetailView):
 
     def get_queryset(self):
         return Post.objects.filter(post_type='article')
+
 
 class NewsCreate(PermissionRequiredMixin, CreateView):
     permission_required = 'news.add_post'
@@ -122,5 +125,15 @@ class ArticleDelete(DeleteView):
     def get_queryset(self):
         return Post.objects.filter(post_type='article')
 
+
 class NewsOrArticleView(TemplateView):
     template_name = 'news_or_article.html'
+
+
+@login_required()
+def subscribe_to_category(request, category_id):
+    category = Category.objects.get(id=category_id)
+    if not category.subscribers.filter(id = request.user.id).exists():
+        category.subscribers.add(request.user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+

@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
+from django.core.exceptions import ValidationError
+from django.contrib.sites.models import Site
 
 POST_TYPES = [
     ('article', 'Article'),
@@ -28,6 +31,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
@@ -61,6 +65,25 @@ class Post(models.Model):
             return reverse('news_detail', args=[str(self.id)])
         else:
             return reverse('article_detail', args=[str(self.id)])
+
+    def get_absolute_url_with_domain(self):
+        return f"http://{Site.objects.get_current().domain}:8000{self.get_absolute_url()}"
+
+    def save(self, *args, **kwargs):
+        if not self.pk and self.post_type == 'news':
+            author = self.author
+            today_start = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0)
+            today_news_count = Post.objects.filter(
+                author=author,
+                post_type='news',
+                creation_date__gte=today_start
+            ).count()
+            if today_news_count > 5:
+                raise ValidationError(
+                    'You cannot publish more than 3 news items per day.'
+                )
+
+        super().save(*args, **kwargs)
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
