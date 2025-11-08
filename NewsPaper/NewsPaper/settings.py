@@ -167,3 +167,24 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
+
+REDIS_HOST = 'redis-14662.c83.us-east-1-2.ec2.redns.redis-cloud.com'
+REDIS_PORT = 14662
+REDIS_PASSWORD = 'yV7VxGmlvrhaKEgtpHhN3U4FobuIK9VX'
+REDIS_USERNAME = 'default'
+
+# Celery Configuration
+CELERY_BROKER_URL = f'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/0'
+CELERY_RESULT_BACKEND = f'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
+    }
+}
+

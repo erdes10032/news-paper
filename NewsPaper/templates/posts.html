@@ -2,6 +2,7 @@
 {% load custom_filters %}
 {% load custom_tags %}
 
+
 {% block title %}
    <h1>All posts</h1>
 {% endblock title %}
@@ -22,7 +23,9 @@
 
            {% for post in posts %}
            <tr>
-               <td>{{ post.title|censor }}</td>
+               <td>
+                   <a href="{{ post.get_absolute_url_with_domain }}">{{ post.title|censor }}</a>
+               </td>
                <td>{{ post.creation_date|date:'d.M.Y' }}</td>
                <td>{{ post.text|truncatechars:20|censor}}</td>
            </tr>
@@ -32,6 +35,7 @@
    {% else %}
        <h2>No posts!</h2>
    {% endif %}
+
 
    {% if page_obj.has_previous %}
        <a href="?{% url_replace page=1 %}">1</a>

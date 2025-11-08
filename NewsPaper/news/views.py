@@ -8,7 +8,7 @@ from .filters import PostFilter
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect
-
+from django.core.cache import cache
 
 
 class NewsList(ListView):
@@ -53,17 +53,28 @@ class NewsDetail(DetailView):
     model = Post
     template_name = 'post.html'
     context_object_name = 'post'
+    queryset = Post.objects.filter(post_type='news')
 
-    def get_queryset(self):
-        return Post.objects.filter(post_type='news')
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'news-{self.kwargs["pk"]}', None)
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'news-{self.kwargs["pk"]}', obj)
+        return obj
+
 
 class ArticleDetail(DetailView):
     model = Post
     template_name = 'post.html'
     context_object_name = 'post'
+    queryset = Post.objects.filter(post_type='article')
 
-    def get_queryset(self):
-        return Post.objects.filter(post_type='article')
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'article-{self.kwargs["pk"]}', None)
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'article-{self.kwargs["pk"]}', obj)
+        return obj
 
 
 class NewsCreate(PermissionRequiredMixin, CreateView):
@@ -136,4 +147,3 @@ def subscribe_to_category(request, category_id):
     if not category.subscribers.filter(id = request.user.id).exists():
         category.subscribers.add(request.user)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-
