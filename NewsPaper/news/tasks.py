@@ -8,7 +8,7 @@ from .models import Post, Category
 
 
 @shared_task
-def send_new_post_notification(email, username, post_title, post_text, post_url):  # Добавили post_text
+def send_new_post_notification(email, username, post_title, post_text, post_url):
     html_content = render_to_string('post_created.html', {
         'post_title': post_title,
         'post_text': post_text,
