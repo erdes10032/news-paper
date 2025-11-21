@@ -59,6 +59,10 @@ class Post(models.Model):
         else:
             return self.text
 
+    @property
+    def good_rating(self):
+        return self.post_rating > 0
+
     def __str__(self):
         return f'{self.title} \n{self.preview()}'
 

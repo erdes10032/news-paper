@@ -1,6 +1,6 @@
 from django import template
 from django.core.exceptions import BadRequest
-from ..constants import BAD_WORDS
+from ..constants import forbidden_words
 register = template.Library()
 
 @register.filter()
@@ -9,12 +9,12 @@ def censor(value):
       raise TypeError('Value must be a string')
 
    censored_text = value
-   for word in BAD_WORDS:
+   for word in forbidden_words:
       words = censored_text.split()
       censored_words = []
       for w in words:
          if word in w.lower():
-            censored_words.append(w[0] + '*' * (len(w) - 1))
+            censored_words.append(w[0] + '*' * (len(w) - 2) + w[-1])
          else:
             censored_words.append(w)
       censored_text = ' '.join(censored_words)

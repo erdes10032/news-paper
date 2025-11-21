@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import Post
-from.constants import BAD_WORDS
+from.constants import forbidden_words
 
 
 class PostForm(forms.ModelForm):
@@ -25,7 +25,7 @@ class PostForm(forms.ModelForm):
             raise ValidationError({
                 "title": "The title cannot be identical to the text"
             })
-        for word in BAD_WORDS:
+        for word in forbidden_words:
             if word in title.lower():
                 raise ValidationError({
                     "title": "The title should not contain bad words."

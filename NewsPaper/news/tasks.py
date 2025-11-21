@@ -68,7 +68,8 @@ def send_weekly_articles():
 
             msg = EmailMultiAlternatives(
                 subject=f'Weekly news selection in the category "{category.name}"',
-                body=f'Hello, {subscriber.username}! Here are the new articles in the category "{category.name}" for the past week.',
+                body=f'Hello, {subscriber.username}! Here are the new articles'
+                     f' in the category "{category.name}" for the past week.',
                 from_email='erdes3182@yandex.ru',
                 to=[subscriber.email]
             )
