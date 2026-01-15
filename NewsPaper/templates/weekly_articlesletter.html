@@ -1,18 +1,18 @@
-<!DOCTYPE html>
+{% load i18n %}
 <html>
 <head>
-    <title>Weekly articles selection</title>
+    <title>{% trans "Weekly articles selection" %}</title>
 </head>
 <body>
     <h1>Hello, {{ username }}!</h1>
-    <p>Here are the new articles in category "{{ category.name }}" from the past week (from {{ week_ago|date:"d.m.Y" }}):</p>
+    <p>{% trans "Here are the new articles in category" %} "{{ category.name }}" {% trans "from the past week (from" %} {{ week_ago|date:"d.m.Y" }}):</p>
 
     {% for post in posts %}
     <div style="margin-bottom: 20px; padding: 10px; border: 1px solid #ddd;">
         <h2>{{ post.title }}</h2>
-        <p><strong>Date:</strong> {{ post.creation_date|date:"d.m.Y H:i" }}</p>
+        <p><strong>{% trans "Date" %} :</strong> {{ post.creation_date|date:"d.m.Y H:i" }}</p>
         <p>{{ post.text|truncatewords:50 }}</p>
-        <a href="{{ post.get_absolute_url_with_domain }}">Read full</a>
+        <a href="{{ post.get_absolute_url_with_domain }}">{% trans "Read full" %}</a>
     </div>
     </div>
     {% endfor %}

@@ -1,24 +1,21 @@
-<!DOCTYPE html>
+{% load i18n %}
 <html lang="en">
-{% load cache %}
-    {% cache 3600 navigation %}
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
         {% load static %}
         <!-- установка иконки -->
         <link rel="icon" type="image/x-icon" href="{% static 'icons/news.ico' %}" />
         <!-- добавление стилей -->
-        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" />
     </head>
     <body>
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
            <div class="container">
-               <a class="navbar-brand" href=/>News and Articles</a>
-               <a class="navbar-brand" href="/accounts/">Account</a>
+               <a class="navbar-brand" href=/>{% trans "News and Articles" %}</a>
+               <span class="navbar-text ms-3 text-light">{{ current_time }}</span>
+               <a class="navbar-brand" href="/accounts/">{%trans "Account" %}</a>
                <button class="navbar-toggler" type="button" data-toggle="collapse"
                        data-target="#navbarResponsive"
                        aria-controls="navbarResponsive" aria-expanded="false"
@@ -27,10 +24,12 @@
                </button>
            </div>
         </nav>
-        {% endcache %}
         <div class="container">
            <div class="row">
                <div class="col-lg-12 text-center">
+                   <style>
+                        body {background-color: {% if current_time.hour >= 19 or current_time.hour <= 7 %} SteelBlue {% else %} powderblue {% endif %};}
+                   </style>
                    <!-- установка заголовка -->
                    {% block title %}
                    {% endblock title %}

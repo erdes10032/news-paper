@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,17 +51,20 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.yandex',
     'django_apscheduler',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'news.middlewares.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'NewsPaper.urls'
@@ -76,10 +80,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'news.context_processors.timezone_context'
             ],
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'NewsPaper.wsgi.application'
 
@@ -94,6 +101,18 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -121,11 +140,19 @@ AUTHENTICATION_BACKENDS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
+
+LANGUAGES = [
+    ('en-us', 'English'),
+    ('ru', 'Русский'),
+]
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
 
 USE_TZ = True
 
@@ -196,9 +223,6 @@ LOGGING = {
     'disable_existing_loggers': False,
     'style' : '{',
     'formatters': {
-        'console_debug': {
-            'format': '%(asctime)s %(levelname)s %(message)s',
-        },
         'console_warning': {
             'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s',
         },
@@ -228,12 +252,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        'console_debug': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter': 'console_debug',
-        },
         'console_warning': {
             'level': 'WARNING',
             'filters': ['require_debug_true'],
@@ -274,7 +292,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['console_debug', 'console_warning', 'console_error', 'general'],
+            'handlers': ['console_warning', 'console_error', 'general'],
             'level': 'DEBUG',
             'propagate': False,
         },

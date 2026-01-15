@@ -1,0 +1,200 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-01 15:43+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+#: .\fpages\admin.py:11
+msgid "Advanced options"
+msgstr "Расширенные возможности"
+
+#: .\news\filters.py:11 .\news\forms.py:20 .\templates\posts.html:20
+msgid "Title"
+msgstr "Заголовок"
+
+#: .\news\filters.py:17 .\news\forms.py:19 .\templates\post.html:16
+msgid "Category"
+msgstr "Категория"
+
+#: .\news\filters.py:24
+msgid "Creation date after"
+msgstr "Дата создания после"
+
+#: .\news\forms.py:21 .\templates\posts.html:22
+msgid "Text"
+msgstr "Текст"
+
+#: .\news\forms.py:30
+msgid "The title cannot be identical to the text"
+msgstr "Заголовок не может быть идентичным тексту."
+
+#: .\news\forms.py:35
+msgid "The title should not contain bad words."
+msgstr "Заголовок не должен содержать нецензурные слова"
+
+#: .\news\forms.py:39
+msgid "The text should not contain bad words."
+msgstr "Текст не должен содержать нецензурные слова"
+
+#: .\news\forms.py:46
+msgid "The title must begin with a big letter"
+msgstr "Заголовок должен начинаться с большой буквы."
+
+#: .\news\models.py:92
+msgid "You cannot publish more than 3 news items per day."
+msgstr "Вы не можете публиковать более 3 новостей в день."
+
+#: .\news\templatetags\custom_filters.py:37 .\templates\main_page.html:38
+msgid "News"
+msgstr "Новости"
+
+#: .\news\templatetags\custom_filters.py:39 .\templates\main_page.html:39
+msgid "Articles"
+msgstr "Записи"
+
+#: .\news\views.py:195 .\news\views.py:212
+msgid "You can edit only your own posts"
+msgstr "Вы можете редактировать только свои собственные сообщения."
+
+#: .\news\views.py:229 .\news\views.py:246
+msgid "Вы можете удалять только свои собственные записи."
+msgstr "Вы можете "
+
+#: .\templates\default.html:16
+msgid "News and Articles"
+msgstr "Новости и статьи"
+
+#: .\templates\default.html:18
+msgid "Account"
+msgstr "Аккаунт"
+
+#: .\templates\main_page.html:6
+msgid ""
+"Welcome to the site! Select your language, time zone and the posts you're "
+"interested in."
+msgstr ""
+"Добро пожаловать на сайт! Выберите язык, часовой пояс и публикации, которые "
+"вас интересуют"
+
+#: .\templates\main_page.html:14
+msgid "Language"
+msgstr "Язык"
+
+#: .\templates\main_page.html:25 .\templates\main_page.html:36
+msgid "Set"
+msgstr "Установить"
+
+#: .\templates\main_page.html:30
+msgid "Time zone"
+msgstr "Часовой пояс"
+
+#: .\templates\main_page.html:42
+msgid "My groups"
+msgstr "Мои группы"
+
+#: .\templates\post.html:12 .\templates\posts.html:21
+msgid "Publication date"
+msgstr "Дата публикации"
+
+#: .\templates\post.html:23
+msgid "Subscribe"
+msgstr "Подписка"
+
+#: .\templates\post.html:31
+msgid "Rate"
+msgstr "Рейтинг"
+
+#: .\templates\post.html:34
+msgid "Author"
+msgstr "Автор"
+
+#: .\templates\post.html:43
+msgid "Edit post"
+msgstr "Изменить запись"
+
+#: .\templates\post.html:44 .\templates\post_delete.html:5
+msgid "Delete post"
+msgstr "Удалить запись"
+
+#: .\templates\post_created.html:5
+msgid "New post"
+msgstr "Новая запись"
+
+#: .\templates\post_created.html:8
+msgid "Hello"
+msgstr "Здравствуйте"
+
+#: .\templates\post_created.html:12 .\templates\weekly_articlesletter.html:15
+msgid "Read full"
+msgstr "Читать полностью"
+
+#: .\templates\post_edit.html:5
+msgid "Post"
+msgstr "Запись"
+
+#: .\templates\posts.html:14
+msgid "Find"
+msgstr "Поиск"
+
+#: .\templates\posts.html:16
+msgid "Number of posts"
+msgstr "Количество записей"
+
+#: .\templates\posts.html:37
+msgid "No posts!"
+msgstr "Нет записей!"
+
+#: .\templates\posts.html:60
+msgid "Make post"
+msgstr "Создать запись"
+
+#: .\templates\upgrade_account.html:6
+msgid "User"
+msgstr "Пользователь"
+
+#: .\templates\upgrade_account.html:7
+msgid "in groups"
+msgstr "в группах"
+
+#: .\templates\upgrade_account.html:11
+msgid "No groups"
+msgstr "Нет групп"
+
+#: .\templates\upgrade_account.html:17
+msgid "Become an author"
+msgstr "Стать автором"
+
+#: .\templates\weekly_articlesletter.html:4
+msgid "Weekly articles selection"
+msgstr "Еженедельная подборка статей"
+
+#: .\templates\weekly_articlesletter.html:8
+msgid "Here are the new articles in category"
+msgstr "Вот новые статьи в категории"
+
+#: .\templates\weekly_articlesletter.html:8
+msgid "from the past week (from"
+msgstr "с прошлой недели (с"
+
+#: .\templates\weekly_articlesletter.html:13
+msgid "Date"
+msgstr "Дата"
+
+#: .\news\forms.py:21 .\templates\post_edit.html:12
+msgid "Save"
+msgstr "Сохранить"

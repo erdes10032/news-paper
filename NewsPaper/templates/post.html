@@ -1,5 +1,6 @@
-{% extends 'flatpages/default.html' %}
+{% extends 'default.html' %}
 {% load custom_filters %}
+{% load i18n %}
 
 {% block title %}
     <h1>{{ post.title|censor }}</h1>
@@ -8,18 +9,18 @@
 {% block content %}
     <table style="width: 100%; text-align: center;">
         <tr>
-            <td>Publication date - {{ post.creation_date|date:'d.M.Y' }}</td>
+            <td>{% trans "Publication date" %} - {{ post.creation_date|date:'d.M.Y' }}</td>
         </tr>
         <tr>
             <td>
-                Category -
+                {% trans "Category" %} -
                 {% for category in post.category.all %}
                     <div>
                         {{ category.name }}
                         {% if user.is_authenticated %}
                             <form method="post" action="{% url 'subscribe_category' category.id %}">
                                 {% csrf_token %}
-                                <button>Подписаться</button>
+                                <button>{% trans "Subscribe" %}</button>
                             </form>
                         {% endif %}
                     </div>
@@ -27,14 +28,22 @@
             </td>
         </tr>
         <tr>
-            <td>Rate - {{ post.post_rating }} </td>
+            <td>{% trans "Rate" %} - {{ post.post_rating }} </td>
         </tr>
         <tr>
-            <td>Author - {{ post.author.user.username }}</td>
+            <td>{% trans "Author" %} - {{ post.author.user.username }}</td>
         </tr>
         <tr>
             <td>{{ post.text|censor }}</td>
         </tr>
+        <tr>
+            <td>
+                {% if request.user.is_authenticated and user|author and post.author.user == user or user|admin %}
+                    <br>
+                    <button> <a href="{{ post.get_absolute_url_with_domain }}/edit">{% trans "Edit post" %}</a> </button>
+                    <button> <a href="{{ post.get_absolute_url_with_domain }}/delete">{% trans "Delete post" %}</a> </button>
+                {% endif %}
+            </td>
+        </tr>
     </table>
-
 {% endblock content %}

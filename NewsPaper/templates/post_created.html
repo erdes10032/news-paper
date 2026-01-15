@@ -1,14 +1,14 @@
-<!-- post_created.html -->
-<!DOCTYPE html>
+{% load i18n %}
+
 <html>
 <head>
-    <title>New Post</title>
+    <title>{% trans "New post" %}</title>
 </head>
 <body>
-    <h1>Hello, {{ username }}!</h1>
-    <p>New article in your favorite section!</p>
+    <h1>{% trans "Hello" %}, {{ username }}!</h1>
+    <p>{% trans "New article in your favorite section!"</p>
     <h2>{{ post.title }}</h2>
     <p>{{ post.text|truncatewords:50 }}</p>
-    <a href="{{ post_url }}">Read full</a>
+    <a href="{{ post_url }}">{% trans "Read full" %}</a>
 </body>
 </html>

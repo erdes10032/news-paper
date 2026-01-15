@@ -1,17 +1,23 @@
-{% extends 'flatpages/default.html' %}
+{% extends 'default.html' %}
+{% load i18n %}
+{% load custom_filters %}
 
 {% block title %}
-  <h2>
-    User {{request.user.username}}
-    in groups:
-    {% for group in request.user.groups.all %}
-      {{ group.name }}{% if not forloop.last %}, {% endif %}
-    {% empty %}
-      No groups
-    {% endfor %}
-  </h2>
+    <h2>
+        {% trans "User" %} {{request.user.username}}
+        {% trans "in groups" %} :
+        {% for group in request.user.groups.all %}
+            {{ group.name }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+            {% trans "No groups" %}
+        {% endfor %}
+    </h2>
 {% endblock title %}
 
 {% block content %}
-  <button> <a href="upgrade/"> Хочу Premium!</a> </button>
+    {% if user.is_authenticated and not user|author or user|admin %}
+        <button>
+            <a href="upgrade/">{% trans "Become an author" %}</a>
+        </button>
+    {% endif %}
 {% endblock %}

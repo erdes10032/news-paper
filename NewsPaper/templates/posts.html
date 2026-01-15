@@ -1,24 +1,25 @@
-{% extends 'flatpages/default.html' %}
+{% extends 'default.html' %}
 {% load custom_filters %}
 {% load custom_tags %}
+{% load i18n %}
 
 
 {% block title %}
-   <h1>All posts</h1>
+   <h1>{{ post_type|beautiful_post_type }}</h1>
 {% endblock title %}
 
 {% block content %}
    <form action="" method="get">
        {{ filterset.form.as_p }}
-       <input type="submit" value="Find" />
+       <input type="submit" value="{% trans 'Find' %}" />
    </form>
-   <h5> Number of posts - {{ posts|length }}</h5>
+   <h5>{% trans "Number of posts" %} - {{ posts|length }}</h5>
    {% if posts %}
        <table style="width: 110%; text-align: center;">
            <tr>
-               <td>Title</td>
-               <td>Publication date</td>
-               <td>Text</td>
+               <td>{% trans "Title" %}</td>
+               <td>{% trans "Publication date" %}</td>
+               <td>{% trans "Text" %}</td>
            </tr>
 
            {% for post in posts %}
@@ -33,7 +34,7 @@
 
        </table>
    {% else %}
-       <h2>No posts!</h2>
+       <h2>{% trans "No posts!" %}</h2>
    {% endif %}
 
 
@@ -47,12 +48,17 @@
 
    {{ page_obj.number }}
 
-   {% if page_obj.has_next %}
-       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
-       {% if paginator.num_pages != page_obj.next_page_number %}
-           ...
-           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
-       {% endif %}
-   {% endif %}
+    {% if page_obj.has_next %}
+        <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+        {% if paginator.num_pages != page_obj.next_page_number %}
+            ...
+            <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+    {% endif %}
+    {% if request.user.is_authenticated and user|author or user|admin %}
+        <br>
+        <button> <a href="/{{ post_type }}/create">{% trans "Make post" %}</a> </button>
+    {% endif %}
+
 
 {% endblock content %}

@@ -1,1 +1,1 @@
-forbidden_words = ['fuck', 'shit', 'bitch']
+forbidden_words = ['fuck', 'shit', 'bitch', 'черт']

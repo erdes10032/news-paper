@@ -5,12 +5,14 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.contrib.sites.models import Site
 from django.core.cache import cache
+from django.utils.translation import gettext as _
 
 
 POST_TYPES = [
     ('article', 'Article'),
     ('news', 'News'),
 ]
+
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -26,6 +28,7 @@ class Author(models.Model):
 
     def __str__(self):
         return self.user.username
+
 
 class Category(models.Model):
     name = models.CharField(max_length=150, unique=True)
@@ -86,7 +89,7 @@ class Post(models.Model):
             ).count()
             if today_news_count > 3:
                 raise ValidationError(
-                    'You cannot publish more than 3 news items per day.'
+                    _('You cannot publish more than 3 news items per day.')
                 )
 
         super().save(*args, **kwargs)
@@ -100,9 +103,11 @@ class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
+
 class CategoryUser(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
