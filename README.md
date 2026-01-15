@@ -299,14 +299,14 @@ curl -X POST "http://127.0.0.1:8000/api/news/" \
 ## Тестирование
 
 ```bash
-# Запуск всех тестов
-python manage.py test
+# Тесты основных частей
+python manage.py test news.tests.test_basic
 
-# Тесты конкретного приложения
-python manage.py test news.tests
+# Тесты основных сценариев использования
+python manage.py test news.tests.test_critical_paths
 
-# Тесты с подробным выводом
-python manage.py test -v 2
+# Тесты валидации форм
+python manage.py test news.tests.test_forms 
 ```
 
 ## Логирование
