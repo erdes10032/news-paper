@@ -123,9 +123,9 @@ cd newspaper
 
 ```bash
 # Linux/macOS
-echo "EMAIL_HOST_USER=your_email@yandex.ru" > /newspaper/.env
-echo "EMAIL_HOST_PASSWORD=your_app_password" > /newspaper/.env
-echo "EMAIL_ADMIN=admin_email@example.com" > /newspaper/.env
+echo "EMAIL_HOST_USER=your_email@yandex.ru" >> /newspaper/.env
+echo "EMAIL_HOST_PASSWORD=your_app_password" >> /newspaper/.env
+echo "EMAIL_ADMIN=admin_email@example.com" >> /newspaper/.env
 
 # Windows
 echo EMAIL_HOST_USER=your_email@yandex.ru >> newspaper\.env
