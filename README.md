@@ -83,27 +83,30 @@ Django веб-приложение для новостного портала с
 - Планировщик задач: django-apscheduler
 - Фильтрация: django-filter
 - Администрирование: Стандартная Django admin + кастомные действия
+- Изоляция: Docker
 
 ## Основные URL (локальная разработка)
 
-- Главная страница: http://127.0.0.1:8000/
-- Новости: http://127.0.0.1:8000/news/
-- Статьи: http://127.0.0.1:8000/article/
-- REST API: http://127.0.0.1:8000/api/
-- Админ-панель: http://127.0.0.1:8000/admin/
-- Аутентификация: http://127.0.0.1:8000/accounts/
-- Управление группами: http://127.0.0.1:8000/groups/
+- Главная страница: http://localhost:8000/
+- Новости: http://localhost:8000/news/
+- Статьи: http://localhost:8000/article/
+- REST API: http://localhost:8000/api/
+- Админ-панель: http://localhost:8000/admin/
+- Аутентификация: http://localhost:8000/accounts/
+- Управление группами: http://localhost:8000/groups/
 
 ## Установка
 
-### Клонировать репозиторий
+### Способ 1: Локальная установка
+
+**1. Клонировать репозиторий**
 
 ```bash
 git clone https://github.com/erdes10032/news-paper
 cd news-paper
 ```
 
-### Создать виртуальное окружение
+**2. Создать виртуальное окружение**
 
 ```bash
 python -m venv venv
@@ -112,41 +115,29 @@ source venv/bin/activate  # Linux/macOS
 venv\Scripts\activate  # Windows
 ```
 
-### Установить зависимости
+**3. Установить зависимости**
 
 ```bash
 pip install -r requirements.txt
 cd newspaper
 ```
 
-### Настроить переменные окружения
+**4. Заполнить файл NewsPaper/.env своими данными**
 
-```bash
-# Linux/macOS
-echo "EMAIL_HOST_USER=your_email@yandex.ru" > /newspaper/.env
-echo "EMAIL_HOST_PASSWORD=your_app_password" > /newspaper/.env
-echo "EMAIL_ADMIN=admin_email@example.com" > /newspaper/.env
-
-# Windows
-echo EMAIL_HOST_USER=your_email@yandex.ru >> newspaper\.env
-echo EMAIL_HOST_PASSWORD=your_app_password >> newspaper\.env
-echo EMAIL_ADMIN=admin_email@example.com >> newspaper\.env
-```
-
-### Выполнить миграции
+**5. Выполнить миграции**
 
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-### Создать суперпользователя
+** 6. Создать суперпользователя**
 
 ```bash
 python manage.py createsuperuser
 ```
 
-### Запустить сервер
+** 7. Запустить сервер**
 
 ```bash
 # Запуск Django сервера
@@ -157,11 +148,41 @@ celery -A newspaper worker -l INFO
 celery -A newspaper beat -l INFO
 ```
 
+### Способ 2: Docker-установка
+
+**1. Клонировать репозиторий**
+
+```bash
+git clone https://github.com/erdes10032/bulletin-board.git
+cd bulletin-board/bulletinboard
+```
+
+**2. Заполнить файл NewsPaper/.env своими данными**
+
+**3. Запустить проект**
+
+```bash
+docker-compose up --build
+```
+Проект будет доступен по адресу: http://localhost:8000
+
+**4. Остановить проект (опционально)**
+
+```bash
+docker-compose down
+```
+
+**5. Остановить проект с удалением всех данных (опционально)**
+
+```bash
+docker-compose down -v --rmi all
+```
+
 ## Использование
 
 ### 1. Регистрация и вход
 
-- Перейдите на главную страницу http://127.0.0.1:8000/
+- Перейдите на главную страницу http://localhost:8000/
 - Нажмите "Account" в навигационной панели
 - Выберите "Sign Up" для регистрации через email или социальные сети
 - Заполните форму регистрации
@@ -259,13 +280,13 @@ celery -A newspaper beat -l INFO
 **Получение списка новостей:**
 
 ```bash
-curl -X GET "http://127.0.0.1:8000/api/news/"
+curl -X GET "http://localhost:8000/api/news/"
 ```
 
 **Создание новости (с аутентификацией):**
 
 ```bash
-curl -X POST "http://127.0.0.1:8000/api/news/" \
+curl -X POST "http://localhost:8000/api/news/" \
      -H "Content-Type: application/json" \
      -u "username:password" \
      -d '{
@@ -299,6 +320,9 @@ curl -X POST "http://127.0.0.1:8000/api/news/" \
 ## Тестирование
 
 ```bash
+# Если приложение запущено в докере, то нужно войти в контейнер
+docker-compose exec web bash
+
 # Тесты основных частей
 python manage.py test news.tests.test_basic
 
