@@ -87,13 +87,13 @@ Django веб-приложение для новостного портала с
 
 ## Основные URL (локальная разработка)
 
-- Главная страница: http://127.0.0.1:8000/
-- Новости: http://127.0.0.1:8000/news/
-- Статьи: http://127.0.0.1:8000/article/
-- REST API: http://127.0.0.1:8000/api/
-- Админ-панель: http://127.0.0.1:8000/admin/
-- Аутентификация: http://127.0.0.1:8000/accounts/
-- Управление группами: http://127.0.0.1:8000/groups/
+- Главная страница: http://localhost:8000/
+- Новости: http://localhost:8000/news/
+- Статьи: http://localhost:8000/article/
+- REST API: http://localhost:8000/api/
+- Админ-панель: http://localhost:8000/admin/
+- Аутентификация: http://localhost:8000/accounts/
+- Управление группами: http://localhost:8000/groups/
 
 ## Установка
 
@@ -182,7 +182,7 @@ docker-compose down -v --rmi all
 
 ### 1. Регистрация и вход
 
-- Перейдите на главную страницу http://127.0.0.1:8000/
+- Перейдите на главную страницу http://localhost:8000/
 - Нажмите "Account" в навигационной панели
 - Выберите "Sign Up" для регистрации через email или социальные сети
 - Заполните форму регистрации
@@ -280,13 +280,13 @@ docker-compose down -v --rmi all
 **Получение списка новостей:**
 
 ```bash
-curl -X GET "http://127.0.0.1:8000/api/news/"
+curl -X GET "http://localhost:8000/api/news/"
 ```
 
 **Создание новости (с аутентификацией):**
 
 ```bash
-curl -X POST "http://127.0.0.1:8000/api/news/" \
+curl -X POST "http://localhost:8000/api/news/" \
      -H "Content-Type: application/json" \
      -u "username:password" \
      -d '{
@@ -320,6 +320,9 @@ curl -X POST "http://127.0.0.1:8000/api/news/" \
 ## Тестирование
 
 ```bash
+# Если приложение запущено в докере, то нужно войти в контейнер
+docker-compose exec web bash
+
 # Тесты основных частей
 python manage.py test news.tests.test_basic
 
