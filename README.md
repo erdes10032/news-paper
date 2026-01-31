@@ -83,6 +83,7 @@ Django веб-приложение для новостного портала с
 - Планировщик задач: django-apscheduler
 - Фильтрация: django-filter
 - Администрирование: Стандартная Django admin + кастомные действия
+- Изоляция: Docker
 
 ## Основные URL (локальная разработка)
 
@@ -96,14 +97,16 @@ Django веб-приложение для новостного портала с
 
 ## Установка
 
-### Клонировать репозиторий
+### Способ 1: Локальная установка
+
+**1. Клонировать репозиторий**
 
 ```bash
 git clone https://github.com/erdes10032/news-paper
 cd news-paper
 ```
 
-### Создать виртуальное окружение
+**2. Создать виртуальное окружение**
 
 ```bash
 python -m venv venv
@@ -112,41 +115,29 @@ source venv/bin/activate  # Linux/macOS
 venv\Scripts\activate  # Windows
 ```
 
-### Установить зависимости
+**3. Установить зависимости**
 
 ```bash
 pip install -r requirements.txt
 cd newspaper
 ```
 
-### Настроить переменные окружения
+**4. Заполнить файл NewsPaper/.env своими данными**
 
-```bash
-# Linux/macOS
-echo "EMAIL_HOST_USER=your_email@yandex.ru" >> /newspaper/.env
-echo "EMAIL_HOST_PASSWORD=your_app_password" >> /newspaper/.env
-echo "EMAIL_ADMIN=admin_email@example.com" >> /newspaper/.env
-
-# Windows
-echo EMAIL_HOST_USER=your_email@yandex.ru >> newspaper\.env
-echo EMAIL_HOST_PASSWORD=your_app_password >> newspaper\.env
-echo EMAIL_ADMIN=admin_email@example.com >> newspaper\.env
-```
-
-### Выполнить миграции
+**5. Выполнить миграции**
 
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-### Создать суперпользователя
+** 6. Создать суперпользователя**
 
 ```bash
 python manage.py createsuperuser
 ```
 
-### Запустить сервер
+** 7. Запустить сервер**
 
 ```bash
 # Запуск Django сервера
@@ -155,6 +146,36 @@ python manage.py runserver
 celery -A newspaper worker -l INFO
 # И Celery beat для периодических задач
 celery -A newspaper beat -l INFO
+```
+
+### Способ 2: Docker-установка
+
+**1. Клонировать репозиторий**
+
+```bash
+git clone https://github.com/erdes10032/bulletin-board.git
+cd bulletin-board/bulletinboard
+```
+
+**2. Заполнить файл NewsPaper/.env своими данными**
+
+**3. Запустить проект**
+
+```bash
+docker-compose up --build
+```
+Проект будет доступен по адресу: http://localhost:8000
+
+**4. Остановить проект (опционально)**
+
+```bash
+docker-compose down
+```
+
+**5. Остановить проект с удалением всех данных (опционально)**
+
+```bash
+docker-compose down -v --rmi all
 ```
 
 ## Использование
