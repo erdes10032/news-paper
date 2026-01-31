@@ -1,0 +1,60 @@
+services:
+  web:
+    build: .
+    container_name: NewsPaper_django
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./media:/app/media
+      - ./staticfiles:/app/staticfiles
+      - ./static:/app/static
+      - ./cache_files:/app/cache_files
+      - ./db.sqlite3:/app/db.sqlite3
+    env_file:
+      - ./NewsPaper/.env
+    environment:
+      - DJANGO_SETTINGS_MODULE=NewsPaper.settings
+      - PYTHONUNBUFFERED=1
+      - DEBUG=True
+    command: >
+      bash -c "python manage.py collectstatic --noinput &&
+               python manage.py migrate &&
+               python manage.py runserver 0.0.0.0:8000"
+    networks:
+      - NewsPaper_network
+
+  celery:
+    build: .
+    container_name: NewsPaper_celery
+    restart: unless-stopped
+    command: celery -A NewsPaper worker --loglevel=info
+    volumes:
+      - ./media:/app/media
+      - ./db.sqlite3:/app/db.sqlite3
+    env_file:
+      - ./NewsPaper/.env
+    environment:
+      - DJANGO_SETTINGS_MODULE=NewsPaper.settings
+      - PYTHONUNBUFFERED=1
+    networks:
+      - NewsPaper_network
+
+  celery-beat:
+    build: .
+    container_name: NewsPaper_celery_beat
+    restart: unless-stopped
+    command: celery -A NewsPaper beat --loglevel=info
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3
+    env_file:
+      - ./NewsPaper/.env
+    environment:
+      - DJANGO_SETTINGS_MODULE=NewsPaper.settings
+      - PYTHONUNBUFFERED=1
+    networks:
+      - NewsPaper_network
+
+networks:
+  NewsPaper_network:
+    driver: bridge

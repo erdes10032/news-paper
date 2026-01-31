@@ -1,0 +1,19 @@
+# .dockerignore
+.git
+.gitignore
+.env
+*.pyc
+__pycache__/
+*.db
+*.sqlite3
+*.log
+cache_files/
+media/
+venv/
+env/
+virtualenv/
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store

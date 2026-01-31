@@ -169,6 +169,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
@@ -190,17 +191,14 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-ADMINS = [
-    ('admin', os.getenv('EMAIL_ADMIN')),
-]
 
 
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
 
-REDIS_HOST = 'redis-14662.c83.us-east-1-2.ec2.redns.redis-cloud.com'
-REDIS_PORT = 14662
-REDIS_PASSWORD = 'yV7VxGmlvrhaKEgtpHhN3U4FobuIK9VX'
-REDIS_USERNAME = 'default'
+REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_PORT = os.getenv('REDIS_PORT')
+REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
+REDIS_USERNAME = os.getenv('REDIS_USERNAME')
 
 # Celery Configuration
 CELERY_BROKER_URL = f'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/0'
