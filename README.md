@@ -103,7 +103,7 @@ Django веб-приложение для новостного портала с
 
 ```bash
 git clone https://github.com/erdes10032/news-paper
-cd news-paper
+cd news-paper/newspaper
 ```
 
 **2. Создать виртуальное окружение**
@@ -119,7 +119,6 @@ venv\Scripts\activate  # Windows
 
 ```bash
 pip install -r requirements.txt
-cd newspaper
 ```
 
 **4. Заполнить файл NewsPaper/.env своими данными**
@@ -154,7 +153,7 @@ celery -A newspaper beat -l INFO
 
 ```bash
 git clone https://github.com/erdes10032/bulletin-board.git
-cd bulletin-board/bulletinboard
+cd news-paper/newspaper
 ```
 
 **2. Заполнить файл NewsPaper/.env своими данными**
