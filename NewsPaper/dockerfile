@@ -19,19 +19,19 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Копируем проект
+# Копируем остальной код
 COPY . .
 
-# Создаем директории для статики и медиа
+# Создаем папки для статики и медиа
 RUN mkdir -p /app/staticfiles /app/media /app/cache_files
 
-# Создаем пользователя для безопасности
+# Создаем не-root пользователя для безопасности
 RUN useradd -m -u 1000 django && \
     chown -R django:django /app
 USER django
 
-# Делаем порт доступным
+# Порт, который будет слушать приложение
 EXPOSE 8000
 
-# Команда запуска
+# Команда для запуска приложения
 CMD ["bash", "-c", "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn NewsPaper.wsgi:application --bind 0.0.0.0:8000 --workers 3"]
